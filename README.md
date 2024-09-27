@@ -36,7 +36,7 @@ python3 xss-cookie-stealer.py <YOUR_IP>
 Example:
 
 ```bash
-python3 create_payload.py 192.168.1.10
+python3 xss-cookie-stealer.py 192.168.1.10
 ```
 
 ### Payload
